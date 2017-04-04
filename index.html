@@ -35,7 +35,8 @@ Description:
 		img = document.createElement('img');
 		img.src = src; // new image
 		document.body.appendChild(img);
-
+		
+		//previous captions are not being loaded with previous image...why?
 		document.getElementById('caption').innerHTML = document.getElementById('idDes').value;
 
 /* each appendChild builds upon previous URL-form submission image appendChild, so is localStorage required here? 
@@ -59,8 +60,6 @@ Description:
 
 <!-- Need captions BELOW image -->
 <h4 id = 'caption'></h4>
-<br><br>
-<p id = 'caption2'></p>
 
 </body>
 
