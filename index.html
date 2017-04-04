@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>appendChild Gallery</title>
+
+<style>
+body {
+font-family: Sans-Serif;
+font-size: medium;
+}
+</style>
+
+</head>
+
+<body>
+
+<form action="#">
+
+URL:
+<input type="text" name="image" id="idImage" value="" onClick="this.select();"/>
+<br><br>
+Description:
+<input type="text" name="des" id="idDes" value="" onClick="this.select();"/>
+<br><br>
+<input type="button" id="btn" name="submit" value="Load" />
+</form>
+
+<script>
+
+	document.getElementById('btn').onclick = function() {
+		var val = document.getElementById('idImage').value;
+		var valDes = document.getElementById('idDes').value;
+		
+         	src = val,
+		img = document.createElement('img');
+		img.src = src; // new image
+		document.body.appendChild(img);
+
+		document.getElementById('caption').innerHTML = document.getElementById('idDes').value;
+
+/* each appendChild builds upon previous URL-form submission image appendChild, so is localStorage required here? 
+
+		localStorage.setImage('idDes', valDes);
+		localStorage.setImage("idImage", val);
+		
+		imgStore = localStorage.getImage("idImage");
+		desStore = localStorage.getImage("idDes");
+		img1 = document.createElement('img1');
+		img1.src = imgStore; //stored image
+		//desStore.src = desStore;
+
+		document.body.appendChild(img1);
+
+		document.getElementById('caption2').innerHTML = document.getElementById('desStore');
+*/
+        }
+
+</script>
+
+<!-- Need captions BELOW image -->
+<h4 id = 'caption'></h4>
+<br><br>
+<p id = 'caption2'></p>
+
+</body>
+
+</html>
