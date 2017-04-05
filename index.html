@@ -7,6 +7,20 @@
 body {
 font-family: Sans-Serif;
 font-size: medium;
+padding: 20px;
+.img {
+    position: relative;
+    float: left;
+    width:  100px;
+    height: 100px;
+    background-position: 50% 50%;
+    background-repeat:   no-repeat;
+    background-size:     cover;
+}
+}
+
+caption: {
+	caption-side: bottom;
 }
 </style>
 
@@ -23,23 +37,47 @@ Description:
 <input type="text" name="des" id="idDes" value="" onClick="this.select();"/>
 <br><br>
 <input type="button" id="btn" name="submit" value="Load" />
+<br><br>
 </form>
-
+	
 <script>
 
 	document.getElementById('btn').onclick = function() {
+	
+		//image
 		var val = document.getElementById('idImage').value;
-		var valDes = document.getElementById('idDes').value;
-		
-         	src = val,
-		img = document.createElement('img');
-		img.src = src; // new image
+		var img = document.createElement('img');
+		src = val,
+		img.src = src;
 		document.body.appendChild(img);
-		
-		//previous captions are not being loaded with previous image...why?
-		document.getElementById('caption').innerHTML = document.getElementById('idDes').value;
 
-/* each appendChild is building upon previous appendChild image (good!), so is localStorage required to access values for later? 
+		img.style.width = "150px";
+		img.style.height = "150px";
+		img.style.padding = "10px";
+		img.style.float = "left";
+		img.style.margin = "0px, 50px"; 
+
+		//description
+		var valDes = document.getElementById('idDes').value;
+		var des = document.createElement('P'); //also tried 'CAPTION' per specs
+		src = valDes,
+		des.src = src;
+		//valDes.body.appendChild(des); //error "is not a function" ??
+		//des.setAttribute('label', valDes);
+		//des.setAttribute('style', 'width: 150px;');
+		//document.getElementById("description").appendChild(des);
+		var tex = document.createTextNode(valDes);
+		description.appendChild(tex);
+
+		description.style.display = 'inline-block';
+		//description.style.position = 'absolute'; 
+		des.style.float = 'left';		
+		des.style.width = "150px";
+		des.style.height = "160px";
+		des.style.padding = "10px";  
+		
+	
+/* integrate localStorage 
 
 		localStorage.setImage('idDes', valDes);
 		localStorage.setImage("idImage", val);
@@ -58,8 +96,8 @@ Description:
 
 </script>
 
-<!-- Need captions BELOW image -->
-<h4 id = 'caption'></h4>
+<p id="description"></p>
+
 
 </body>
 
