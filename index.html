@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>appendChild Gallery</title>
+<title>container Gallery</title>
 
 <style>
 body {
 font-family: Sans-Serif;
 font-size: medium;
 padding: 20px;
+
 }
 
-caption: {
-	caption-side: bottom;
+.img_descrip_wrap {
+	display: inline-block;
+   	max-width: 270px;
+   	vertical-align: top;
+}
+
+.img_descrip_wrap img {
+	width:150px; height: 150px; padding:10px; margin: 0 50px; display: block;
 }
 </style>
 
@@ -30,65 +37,36 @@ Description:
 <input type="button" id="btn" name="submit" value="Load" />
 <br><br>
 </form>
-	
+
+
+
 <script>
 
 	document.getElementById('btn').onclick = function() {
 	
 		//image
+		
+		var container = document.createElement("div");
+		container.className = "img_descrip_wrap";
 		var val = document.getElementById('idImage').value;
 		var img = document.createElement('img');
-		src = val,
+		src = val; 
 		img.src = src;
-		document.body.appendChild(img);
-
-		img.style.width = "150px";
-		img.style.height = "150px";
-		img.style.padding = "10px";
-		img.style.float = "left";
-		img.style.margin = "0px, 50px"; 
 
 		//description
 		var valDes = document.getElementById('idDes').value;
-		var des = document.createElement('P'); //also tried 'CAPTION' per specs
-		src = valDes,
-		des.src = src;
-		//valDes.body.appendChild(des); //error "is not a function" ??
-		//des.setAttribute('label', valDes);
-		//des.setAttribute('style', 'width: 150px;');
-		//document.getElementById("description").appendChild(des);
+		var des = document.createElement('p'); 
+		
 		var tex = document.createTextNode(valDes);
-		description.appendChild(tex);
-
-		description.style.display = 'inline-block';
-		//description.style.position = 'absolute'; 
-		des.style.float = 'left';		
-		des.style.width = "150px";
-		des.style.height = "160px";
-		des.style.padding = "10px";  
 		
-	
-/* integrate localStorage 
+		des.appendChild(tex); 
 
-		localStorage.setImage('idDes', valDes);
-		localStorage.setImage("idImage", val);
-		
-		imgStore = localStorage.getImage("idImage");
-		desStore = localStorage.getImage("idDes");
-		img1 = document.createElement('img1');
-		img1.src = imgStore; //stored image
-		//desStore.src = desStore;
-
-		document.body.appendChild(img1);
-
-		document.getElementById('caption2').innerHTML = document.getElementById('desStore');
-*/
-        }
+		container.appendChild(img);
+		container.appendChild(des);
+		document.body.appendChild(container);
+		}; //close function
 
 </script>
-
-<p id="description"></p>
-
 
 </body>
 
