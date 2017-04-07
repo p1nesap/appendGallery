@@ -7,18 +7,15 @@
 body {
 font-family: Sans-Serif;
 font-size: medium;
-padding: 20px;
-
+padding: 25px;
 }
-
 .img_descrip_wrap {
 	display: inline-block;
-   	max-width: 270px;
+   	width: 230px;
    	vertical-align: top;
 }
-
 .img_descrip_wrap img {
-	width:150px; height: 150px; padding:10px; margin: 0 50px; display: block;
+	width:150px; height: 150px; padding:0px; margin: 0 0px; display: block;
 }
 </style>
 
@@ -38,10 +35,9 @@ Description:
 <br><br>
 </form>
 
-
+<p id = "description"></p>
 
 <script>
-
 	document.getElementById('btn').onclick = function() {
 	
 		//image
@@ -52,6 +48,10 @@ Description:
 		var img = document.createElement('img');
 		src = val; 
 		img.src = src;
+		img.onclick = function () {
+			window.open(src);
+			//window.location.href = src;
+}
 
 		//description
 		var valDes = document.getElementById('idDes').value;
@@ -60,11 +60,11 @@ Description:
 		var tex = document.createTextNode(valDes);
 		
 		des.appendChild(tex); 
-
 		container.appendChild(img);
 		container.appendChild(des);
 		document.body.appendChild(container);
 		}; //close function
+        
 
 </script>
 
