@@ -1,31 +1,63 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>container Gallery</title>
+<!doctype html>
 
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Gallery Live</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <style>
 body {
 font-family: Sans-Serif;
 font-size: medium;
 padding: 25px;
 }
+input[type=text] {
+	border-radius: 5px;
+	width: 20%;
+}
+input[type=file] {
+	border-radius: 5px;
+	width: 20%;
+}
+input[type=button] {
+	border-radius: 5px;
+	width: 7%;
+}
 .img_descrip_wrap {
 	display: inline-block;
    	width: 230px;
    	vertical-align: top;
 }
+.img_descrip_wrap_ls {
+	color: #006400;
+	display: inline-block;
+   	width: 230px;
+   	vertical-align: top;
+}
+
+
 .img_descrip_wrap img {
 	width:150px; height: 150px; padding:0px; margin: 0 0px; display: block;
+}
+pre {
+    display: block;
+    font-family: sans-serif;
+	color: #006400;
+	font-size: medium;
+    white-space: pre;
+    margin: 1em 0;
 }
 </style>
 
 </head>
 
-<body>
+<body onload = "lsCheck() ;">
 
-<form action="#">
-
-URL:
+<form action="#" onsubmit="return false">
+Upload image
+<input type="file" id="upld" value="Choose file"/>
+<img id="compImg" src="#" onClick="this.select();"/>
+or URL:
 <input type="text" name="image" id="idImage" value="" onClick="this.select();"/>
 <br><br>
 Description:
@@ -35,39 +67,71 @@ Description:
 <br><br>
 </form>
 
-<p id = "description"></p>
-
 <script>
+	// checks localStorage
+	function lsCheck() {
+			lsData = [];
+			
+		if (localStorage.desSet) {
+			
+			lsData = JSON.parse(localStorage.getItem("desSet"));
+
+			var lsDataMap = lsData.map(function(mapResult) {
+				return mapResult;
+				});
+				console.log(lsDataMap);
+			}
+            var valDes = lsDataMap; 
+	}
 	document.getElementById('btn').onclick = function() {
 	
-		//image
-		
+		//image on page
 		var container = document.createElement("div");
 		container.className = "img_descrip_wrap";
-		var val = document.getElementById('idImage').value;
+
+		var val = document.getElementById('idImage').value; 
 		var img = document.createElement('img');
-		src = val; 
-		img.src = src;
+	
+		src = val;
+        img.src = src;
+		container.appendChild(img);
+		document.body.appendChild(container);
 		img.onclick = function () {
 			window.open(src);
-			//window.location.href = src;
 }
+		//descriptions from form submit (below image)
+		var valDes = document.getElementById("idDes").value;
+		var des = document.createElement("p");
 
-		//description
-		var valDes = document.getElementById('idDes').value;
-		var des = document.createElement('p'); 
-		
 		var tex = document.createTextNode(valDes);
-		
-		des.appendChild(tex); 
-		container.appendChild(img);
+		des.appendChild(tex);
+
 		container.appendChild(des);
 		document.body.appendChild(container);
-		}; //close function
+      
+		// append current descrip. value into array
+		lsData.push(valDes); 
+		
+		// set entire array to localStorage
+		localStorage.setItem("desSet", JSON.stringify(lsData));
+		
+}; //close onclick function
+
+//File Upload
+		$(function () {
+			$(":file").change(function() {
+				if(this.files && this.files[0]) {
+				var reader = new FileReader();
+				reader.onload = imageIsLoaded;
+				reader.readAsDataURL(this.files[0]);
+				}
+			});
+		});
         
+		function imageIsLoaded(e) {
+            compImg = document.getElementById("compImg");
+			$('#compImg').attr('src', e.target.result);
+        
+		};
 
 </script>
-
-</body>
-
-</html>
