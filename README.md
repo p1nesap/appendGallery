@@ -1,1 +1,1 @@
-Goal is tiled image gallery page (with captions), populated by URL form submit. Store values in localStorage?
+Tiled image gallery page (with captions), populated by URL form submit or local file upload. Store values in localStorage.
