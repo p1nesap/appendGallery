@@ -34,11 +34,14 @@ input[type=button] {
    	width: 230px;
    	vertical-align: top;
 }
-
-
 .img_descrip_wrap img {
-	width:150px; height: 150px; padding:0px; margin: 0 0px; display: block;
+	width:150px;
+	height: 150px;
+	padding:0px;
+	margin: 0 0px;
+	display: block;
 }
+
 pre {
     display: block;
     font-family: sans-serif;
@@ -47,6 +50,11 @@ pre {
     white-space: pre;
     margin: 1em 0;
 }
+#compImg{
+	width: 150px;
+	height: 150px;
+}
+
 </style>
 
 </head>
@@ -75,7 +83,6 @@ Description:
 		if (localStorage.desSet) {
 			
 			lsData = JSON.parse(localStorage.getItem("desSet"));
-
 			var lsDataMap = lsData.map(function(mapResult) {
 				return mapResult;
 				});
@@ -84,54 +91,75 @@ Description:
             var valDes = lsDataMap; 
 	}
 	document.getElementById('btn').onclick = function() {
+		//check if image has been uploaded and read it
+		if(document.getElementById("upld").files.length > 0) {
+			var reader = new FileReader();
+			//call imageIsLoaded function and pass it the image file to read
+			reader.onload = imageIsLoaded;
+			reader.readAsDataURL(document.getElementById("upld").files[0]);
+		} else {
+			if(document.getElementById("idImage").value != ""){
+				var container = document.createElement("div");
+				container.className = "img_descrip_wrap";
+				var val = document.getElementById('idImage').value; 
+				var img = document.createElement('img');
+				src = val;
+				img.src = src;
+				container.appendChild(img);
+				document.body.appendChild(container);
+				img.onclick = function () {
+					window.open(src);
+				}
+				//descriptions from form submit (below image)
+				var valDes = document.getElementById("idDes").value;
+				var des = document.createElement("p");
+				var tex = document.createTextNode(valDes);
+				des.appendChild(tex);
+				container.appendChild(des);
+				document.body.appendChild(container);
+				// append current descrip. value and url into array
+				lsData.push(valDes);
+				lsData.push(val);
+				// set entire array to localStorage
+				localStorage.setItem("desSet", JSON.stringify(lsData));
+				//clear the value of the idImage and idDes input text elements
+				document.getElementById("idImage").value = "";
+				document.getElementById("idDes").value = "";
+			}
+		}
+	} //close onclick function
+		
+	function imageIsLoaded(e) {
+                compImg = document.getElementById("compImg");
+		compImg.setAttribute('src', e.target.result);
+		
+		//save image data into variable
+		var imageData = e.target.result;
 	
 		//image on page
 		var container = document.createElement("div");
 		container.className = "img_descrip_wrap";
-
 		var val = document.getElementById('idImage').value; 
 		var img = document.createElement('img');
-	
-		src = val;
-        img.src = src;
-		container.appendChild(img);
+        img.src = imageData;
+		container.appendChild(img); // file upload display in container
 		document.body.appendChild(container);
 		img.onclick = function () {
 			window.open(src);
-}
+		} 
 		//descriptions from form submit (below image)
 		var valDes = document.getElementById("idDes").value;
 		var des = document.createElement("p");
-
 		var tex = document.createTextNode(valDes);
 		des.appendChild(tex);
-
 		container.appendChild(des);
 		document.body.appendChild(container);
-      
-		// append current descrip. value into array
-		lsData.push(valDes); 
-		
+		// append current descrip. value and image data into array
+		lsData.push(valDes);
+		lsData.push(imageData);
 		// set entire array to localStorage
 		localStorage.setItem("desSet", JSON.stringify(lsData));
-		
-}; //close onclick function
-
-//File Upload
-		$(function () {
-			$(":file").change(function() {
-				if(this.files && this.files[0]) {
-				var reader = new FileReader();
-				reader.onload = imageIsLoaded;
-				reader.readAsDataURL(this.files[0]);
-				}
-			});
-		});
-        
-		function imageIsLoaded(e) {
-            compImg = document.getElementById("compImg");
-			$('#compImg').attr('src', e.target.result);
-        
-		};
-
+		//clear the value of the upld input text element
+		document.getElementById("upld").value = "";
+	}
 </script>
